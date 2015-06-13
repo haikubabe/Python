@@ -1,0 +1,90 @@
+state1 = [0,1,2,3,4,5,6,7,8]
+state2 = [3,1,2,0,4,5,6,7,8]
+state3 = [3,1,2,4,5,8,6,0,7]
+#state4=[2,8,3,1,6,4,7,0,5]
+
+def printstate(state):
+        print state[0],state[1],state[2]
+        print state[3],state[4],state[5]
+        print state[6],state[7],state[8]
+
+
+def z(state):   
+    return state.index(0)
+
+def left(state):
+    zeroLoc = z(state)
+    state[zeroLoc] = state[zeroLoc-1]
+    state[zeroLoc-1] = 0
+    return state
+
+def up(state):
+    zeroLoc = z(state)
+    state[zeroLoc] = state[zeroLoc-3]
+    state[zeroLoc-3] = 0
+    return state
+
+def right(state):
+    zeroLoc = z(state)
+    state[zeroLoc] = state[zeroLoc+1]
+    state[zeroLoc+1] = 0
+    return state
+
+def down(state):
+    zeroLoc = z(state)
+    state[zeroLoc] = state[zeroLoc+3]
+    state[zeroLoc+3] = 0
+    return state
+
+def takeaction(state):
+    x = z(state)
+    s = []  
+
+    if x == 0:
+        s.append(right(state[:]))
+        s.append(down(state[:]))
+    elif x == 1:
+        s.append(left(state[:]))
+        s.append(right(state[:]))
+        s.append(down(state[:]))
+    elif x == 2:
+        s.append(left(state[:]))
+        s.append(down(state[:]))
+    elif x == 3:
+        s.append(up(state[:]))
+        s.append(right(state[:]))
+        s.append(down(state[:]))
+    elif x == 4:
+        s.append(left(state[:]))
+        s.append(up(state[:]))
+        s.append(right(state[:]))
+        s.append(down(state[:]))
+    elif x == 5:
+        s.append(left(state[:]))
+        s.append(up(state[:]))
+        s.append(down(state[:]))   
+    elif x == 6:
+        s.append(up(state[:]))
+        s.append(right(state[:]))
+    elif x == 7:
+        s.append(left(state[:]))
+        s.append(up(state[:]))
+        s.append(right(state[:]))
+    elif x == 8:
+        s.append(left(state[:]))
+        s.append(up(state[:]))
+
+    return s
+
+goal_state = [0,1,2,3,4,5,6,7,8]
+
+def goaltest(state):
+	if(state==goal_state):
+		return True
+	else:
+		return False
+
+
+def dfs(start,goal,limit):
+	open_list = Stack()
+	open_list.push(start)
